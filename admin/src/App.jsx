@@ -12,7 +12,8 @@ import { ToastContainer } from 'react-toastify';
 import { Route, Routes } from 'react-router-dom'
 
 const App = () => {
-  const url = 'http://localhost:4000';
+  // const url = 'http://localhost:4000';
+  const url = 'https://dineo-backend.onrender.com';
   const currency = "₹";
   return (
     <>

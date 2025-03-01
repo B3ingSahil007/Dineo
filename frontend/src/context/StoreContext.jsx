@@ -5,7 +5,8 @@ export const StoreContext = createContext(null)
 
 const StoreContextProvider = ({ children }) => {
     const currency = "₹"
-    const url = "http://localhost:4000"
+    // const url = "http://localhost:4000"
+    const url = "https://dineo-backend.onrender.com"
     const delivery_fee = 50
     const platform_fee = 20
     const [cartItems, setCartItems] = useState({})

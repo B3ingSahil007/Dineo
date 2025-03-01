@@ -16,7 +16,7 @@ const corsOptions = {
 
 // App Configuration
 const app = express()
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // Middlewares
 app.use(express.json())
