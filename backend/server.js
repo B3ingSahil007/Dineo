@@ -9,7 +9,7 @@ import orderRouter from './routes/orderRoute.js';
 
 // CORS
 const corsOptions = {
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://dineo-one.vercel.app', 'https://dineo-admin.vercel.app'], // Allow both 5173 and 5174
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://dineo.onrender.com', 'https://dineo-admin.onrender.com'], // Allow both 5173 and 5174
     methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, PROPFIND',
     credentials: true
 }
