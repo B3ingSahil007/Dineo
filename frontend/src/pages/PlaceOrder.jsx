@@ -28,6 +28,7 @@ const PlaceOrder = () => {
     country: "",
     phone: "",
   })
+  const [paymentType, setPaymentType] = useState("Cash On Delivery");
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -51,7 +52,8 @@ const PlaceOrder = () => {
       let orderData = {
         address: data,
         items: orderItems,
-        amount: totalAfterDiscount.toFixed(2)
+        amount: totalAfterDiscount.toFixed(2),
+        paymentType,
       }
 
       // console.log('Order Data :', orderData);
@@ -144,7 +146,18 @@ const PlaceOrder = () => {
                 <b>{currency}{totalAfterDiscount.toFixed(2)}</b>
               </div>
             </div>
-            <button type="submit" disabled={isCartEmpty} className={`border-none text-white bg-purple-700 hover:bg-purple-900 text-base py-2 px-4 rounded-lg w-full sm:w-auto mx-auto sm:mx-10 ${isCartEmpty ? "opacity-50 cursor-not-allowed" : ""}`}>PROCEED TO PAYMENT</button>
+            <div className="mb-3">
+              <label className="text-gray-500">Payment Method:</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mt-2">
+                {["Cash On Delivery", "Credit Card", "Google Pay", "Paytm"].map((method) => (
+                  <label key={method} className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="paymentType" value={method} checked={paymentType === method} onChange={(e) => setPaymentType(e.target.value)} className="form-radio accent-purple-700 focus:ring-purple-500" />
+                    <span className="text-gray-700">{method}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <button type="submit" disabled={isCartEmpty} className={`border-none text-white bg-purple-700 hover:bg-purple-900 text-base py-2 px-4 rounded-lg w-full sm:w-auto mx-auto sm:mx-10 ${isCartEmpty ? "opacity-50 cursor-not-allowed" : ""}`}>PLACE ORDER</button>
           </div>
         </form>
       </section>
