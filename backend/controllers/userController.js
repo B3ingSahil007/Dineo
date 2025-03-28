@@ -3,8 +3,11 @@ import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
 import validator from 'validator'
 
+// const createToken = (id) => {
+//     return jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: '100d' })
+// }
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: '10d' })
+    return jwt.sign({ id }, process.env.JWT_SECRET_KEY)
 }
 
 const comparePassword = async (enteredPassword, comparePassword) => {
