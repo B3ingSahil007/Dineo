@@ -1,5 +1,6 @@
 import express from "express";
-import { userSignUp, userLogIn, listUserInfo } from "../controllers/userController.js";
+import { userSignUp, userLogIn, listUserInfo, updateUserInfo, deleteUserAccount } from "../controllers/userController.js";
+import nativeauthMiddleware from "../middleware/nativeAuthMiddleware.js";
 
 const userRouter = express.Router()
 
@@ -10,6 +11,12 @@ userRouter.post('/signup', userSignUp)
 userRouter.post('/login', userLogIn)
 
 // Route To Fetch User Information
-userRouter.post('/fetchuser', listUserInfo)
+userRouter.post('/fetchuser', nativeauthMiddleware, listUserInfo)
+
+// ✅ NEW: Route To Update User Information
+userRouter.put('/update', nativeauthMiddleware, updateUserInfo)
+
+// ✅ NEW: Route To Delete User Account
+userRouter.delete('/delete', nativeauthMiddleware, deleteUserAccount)
 
 export default userRouter;

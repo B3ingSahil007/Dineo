@@ -10,6 +10,8 @@ import PromoCode from './pages/PromoCode'
 import Setting from './pages/Setting'
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes } from 'react-router-dom'
+import AddRestaurant from './pages/AddRestaurant'
+import AllRestaurant from './pages/AllRestaurant'
 
 const App = () => {
   // const url = 'http://localhost:4000';
@@ -28,6 +30,8 @@ const App = () => {
                 <Route path='/' element={<Welcome />} />
                 <Route path='/allusers' element={<Users url={url} />} />
                 <Route path='/add' element={<Add url={url} currency={currency} />} />
+                <Route path='/addrestaurants' element={<AddRestaurant url={url} currency={currency} />} />
+                <Route path='/allrestaurants' element={<AllRestaurant url={url} currency={currency} />} />
                 <Route path='/list' element={<List url={url} currency={currency} />} />
                 <Route path='/orders' element={<Orders url={url} currency={currency} />} />
                 <Route path='/coupons' element={<PromoCode />} />

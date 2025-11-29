@@ -40,12 +40,126 @@ const userLogIn = async (req, res) => {
 // All Users
 const listUserInfo = async (req, res) => {
     try {
-        const users = await userModel.find({})
-        res.status(201).json({ success: true, data: users })
+        // ✅ req.userId middleware se aa raha hai
+        const userId = req.userId;
+        
+        if (!userId) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "User ID not found in token" 
+            });
+        }
+
+        // ✅ Sirf specific user ka data find karo
+        const user = await userModel.findById(userId).select('-password'); // Password exclude karo
+
+        if (!user) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "User not found" 
+            });
+        }
+
+        res.status(200).json({ 
+            success: true, 
+            data: user  // ✅ Ab sirf ek user object return hoga, array nahi
+        });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ success: false, message: "Internal Server Error, Getting Users List!!" })
+        console.error("Error fetching user info:", error);
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error while fetching user information!" 
+        });
+    }
+};
+
+// controllers/userController.js - Add this function
+const updateUserInfo = async (req, res) => {
+    try {
+        const userId = req.userId;
+        
+        if (!userId) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "User ID not found in token" 
+            });
+        }
+
+        const { firstname, lastname, email, mobileNumber } = req.body;
+
+        // Check if user exists
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "User not found" 
+            });
+        }
+
+        // Update fields
+        if (firstname) user.firstname = firstname;
+        if (lastname) user.lastname = lastname;
+        if (email) user.email = email;
+        if (mobileNumber) user.mobileNumber = mobileNumber;
+
+        await user.save();
+
+        res.status(200).json({ 
+            success: true, 
+            message: "Profile updated successfully",
+            data: user
+        });
+
+    } catch (error) {
+        console.error("Error updating user info:", error);
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error while updating profile!" 
+        });
+    }
+};
+
+// controllers/userController.js - Add this function
+const deleteUserAccount = async (req, res) => {
+    try {
+        const userId = req.userId;
+        
+        if (!userId) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "User ID not found in token" 
+            });
+        }
+
+        // Find and delete user
+        const user = await userModel.findByIdAndDelete(userId);
+        
+        if (!user) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "User not found" 
+            });
+        }
+
+        // TODO: You might want to also delete user's related data like:
+        // - Cart items
+        // - Orders
+        // - Addresses
+        // - Favorites
+        // etc.
+
+        res.status(200).json({ 
+            success: true, 
+            message: "Account deleted successfully" 
+        });
+
+    } catch (error) {
+        console.error("Error deleting user account:", error);
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error while deleting account!" 
+        });
     }
 };
 
@@ -88,4 +202,4 @@ const userSignUp = async (req, res) => {
     }
 }
 
-export { userSignUp, userLogIn, listUserInfo }
+export { userSignUp, userLogIn, listUserInfo, updateUserInfo, deleteUserAccount }

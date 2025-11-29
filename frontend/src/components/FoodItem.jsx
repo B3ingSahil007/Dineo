@@ -19,7 +19,7 @@ const FoodItem = ({ id, name, price, description, image, star }) => {
         <>
             <div className="food-item w-full m-auto rounded-xl shadow-[0px_0px_20px_black] animate-fadeIn hover:scale-105 transition-all duration-[.5s]">
                 <div className="food-item-image-container relative">
-                    <img className='food-item-image rounded-tl-xl rounded-tr-xl w-full' src={url+"/images/"+image} alt="Product_Image" />
+                    <img className='food-item-image rounded-tl-xl rounded-tr-xl w-full' src={url + "/images/" + image} alt="Product_Image" />
                     {!cartItems[id] ?
                         <>
                             <div onClick={() => addToCart(id)} className='add absolute bottom-4 right-4 cursor-pointer rounded-full flex bg-black transition-all hover:text-purple-600'>
